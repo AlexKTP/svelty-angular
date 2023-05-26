@@ -1,0 +1,10 @@
+#copyright{
+    font-size: small;
+}
+::placeholder{
+    font-size: small;
+}
+.invalid-input {
+    border-color: red;
+  }
+  
