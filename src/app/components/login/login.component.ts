@@ -15,6 +15,7 @@ export class LoginComponent {
 
   emailRegex: RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
+  confirmationPasswordValidationReason: string = '';
 
   isLogin = false;
   name: string = "";
@@ -36,15 +37,44 @@ export class LoginComponent {
       password: ['', Validators.required],
       confirm: ['', Validators.required]
     }, {});
+
+    this.confirmationPasswordValidationReason = this.getConfirmationPasswordValidationReason();
   }
 
   registerFormSubmit() {
+    this.confirmationPasswordValidationReason = this.getConfirmationPasswordValidationReason();
   }
 
 
   toggleButtonClicked() {
     this.isLogin = !this.isLogin;
   }
+
+
+
+  getConfirmationPasswordValidationReason(): string {
+    const confirmPasswordControl = this.registerForm.get('confirm');
+    const passwordControl = this.registerForm.get('password');
+
+    if (confirmPasswordControl?.errors?.['required']) {
+      return 'Password confirmation is required.';
+    }
+
+    if (confirmPasswordControl?.value !== passwordControl?.value) {
+      return 'Passwords do not match.';
+    }
+
+    if (confirmPasswordControl?.value.length < 8) {
+      return 'Passwords must contain at least 8 characters (with 1 special character && 1 uppercase letter and 1 number).';
+    }
+
+
+    // Add more validation checks and corresponding reasons as needed
+
+    return '';
+  }
+
+
 
 
 }

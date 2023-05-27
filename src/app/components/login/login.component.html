@@ -47,10 +47,11 @@
 									<label class="mb-2 text-muted" for="confirm">Confirm password</label>
 									<input id="confirm" type="password" class="form-control" name="confirm" placeholder="required" formControlName="confirm" 
 									[class.is-invalid]="(registerForm.get('confirm')?.invalid && registerForm.get('confirm')?.touched) || 
-									(registerForm.get('confirm')?.value != registerForm.get('password')?.value)  " required>
+									(registerForm.get('confirm')?.value != registerForm.get('password')?.value) ||
+									(registerForm.get('password')?.value.length  <8) " required>
 									<div class="invalid-feedback">
-									  Password does not match.
-									</div>
+										{{ getConfirmationPasswordValidationReason() }}
+									  </div>
 								  </div>
 								  
 								<p class="form-text text-muted mb-3">
