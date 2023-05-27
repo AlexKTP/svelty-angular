@@ -8,7 +8,8 @@ import { CreateformComponent } from './components/createform/createform.componen
 import { HomeComponent } from './components/home/home.component';
 import { DatePipe } from '@angular/common';
 import { LoginComponent } from './components/login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,9 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

@@ -4,7 +4,8 @@
 ::placeholder{
     font-size: small;
 }
-.invalid-input {
-    border-color: red;
+/* Component-specific CSS file */
+.invalid-feedback {
+    color: red; /* Change this to your desired color */
   }
   

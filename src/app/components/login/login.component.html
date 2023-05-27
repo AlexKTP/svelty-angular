@@ -14,39 +14,42 @@
 						<div class="card-body p-5">
 							<h1 *ngIf="!isLogin" class="fs-4 card-title fw-bold mb-4">Register</h1>
                             <h1 *ngIf="isLogin" class="fs-4 card-title fw-bold mb-4">Login</h1>
-							<form  method="POST" class="needs-validation" novalidate (ngSubmit)="registerFormSubmit()">
+							<form  (ngSubmit)="registerFormSubmit()" [formGroup]="registerForm" method="POST" class="needs-validation" novalidate>
 								<div *ngIf="!isLogin" class="mb-3">
+									<div class="form-group">
 									<label class="mb-2 text-muted" for="name">Name</label>
-									<input id="name" type="text" class="form-control" name="name" value="" placeholder="required" required autofocus>
+									<input id="name" type="text" class="form-control" name="name" placeholder="required" formControlName="name" [class.is-invalid]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" required autofocus>									
+									<div class="valid-feedback">Valid Username.</div>
 									<div class="invalid-feedback">
 										Name is required	
 									</div>
+									</div>
 								</div>
 
-								<div class="mb-3">
-									<label class="mb-2 text-muted" for="email">E-Mail</label>
-									<input id="email" type="email" class="form-control" name="email" value="" placeholder="required" required>
+								<div class="mb-3 form-group">
+									<label class="mb-2 text-muted" for="email">Email</label>
+									<input id="email" type="email" class="form-control" name="email" value="" placeholder="required" formControlName="email"  [class.is-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" required>
 									<div class="invalid-feedback">
 										Email is invalid
 									</div>
 								</div>
 
-								<div class="mb-3">
+								<div class="mb-3" form-group>
 									<label class="mb-2 text-muted" for="password">Password</label>
-                                    <input  id="password" type="password" class="form-control" name="password" [(ngModel)]="password" placeholder="required" required>
+                                    <input  id="password" type="password" class="form-control" name="password"  formControlName="password" placeholder="required" [class.is-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" required>
 								    <div class="invalid-feedback">
 								    	Password is required
 							    	</div>
 								</div>
 
-                                <div *ngIf="!isLogin"  class="mb-3">
-									<label class="mb-2 text-muted" for="password">Confirm password</label>
-									<input id="confirm" type="password" class="form-control" name="password" placeholder="required" required>
-								    <div class="invalid-feedback">
-								    	Password is required
-							    	</div>
-								</div>
-
+								<div *ngIf="!isLogin" class="mb-3 form-group">
+									<label class="mb-2 text-muted" for="confirm">Confirm password</label>
+									<input id="confirm" type="password" class="form-control" name="confirm" placeholder="required" formControlName="confirm" required>
+									<div *ngIf="registerForm.hasError('passwordMismatch')" class="invalid-feedback">
+									  Password confirmation does not match the password.
+									</div>
+								  </div>
+								  
 								<p class="form-text text-muted mb-3">
 									By registering you agree with our terms and condition.
 								</p>
@@ -59,6 +62,7 @@
 										Login	
 									</button>
 								</div>
+							
 							</form>
 						</div>
 						<div class="card-footer py-3 border-0">
