@@ -1,5 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+
 
 
 @Component({
@@ -33,48 +35,11 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.pattern(this.emailRegex)]],
       password: ['', Validators.required],
       confirm: ['', Validators.required]
-    }, {
-      validators: this.passwordMatchValidator
-    });
+    }, {});
   }
 
   registerFormSubmit() {
-    if (this.registerForm.valid) {
-      const password = this.registerForm.get('password')?.value;
-      const confirm = this.registerForm.get('confirm')?.value;
-
-      if (password !== confirm) {
-        this.registerForm.get('confirm')?.setErrors({ passwordMismatch: true });
-      } else {
-        // Form submission logic
-      }
-    }
   }
-
-  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
-    const password = control.get('password')?.value;
-    const confirm = control.get('confirm')?.value;
-
-    if (password !== confirm) {
-      return { passwordMismatch: true };
-    }
-
-    return null;
-  }
-
-
-
-  validateConfirmPassword() {
-    const confirmPasswordControl = this.registerForm.get('confirm');
-    if (confirmPasswordControl && this.confirmPasswordInput) {
-      if (confirmPasswordControl.invalid && confirmPasswordControl.touched) {
-        this.confirmPasswordInput.nativeElement.classList.add('is-invalid');
-      } else {
-        this.confirmPasswordInput.nativeElement.classList.remove('is-invalid');
-      }
-    }
-  }
-
 
 
   toggleButtonClicked() {

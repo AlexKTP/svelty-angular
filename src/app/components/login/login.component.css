@@ -8,4 +8,9 @@
 .invalid-feedback {
     color: red; /* Change this to your desired color */
   }
+
+  .error {
+    color: red; 
+    font-size: 0.8em;/* Change this to your desired color */
+  }
   

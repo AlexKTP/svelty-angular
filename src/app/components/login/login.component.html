@@ -33,8 +33,9 @@
 										Email is invalid
 									</div>
 								</div>
+								
 
-								<div class="mb-3" form-group>
+								<div class="mb-3 form-group">									
 									<label class="mb-2 text-muted" for="password">Password</label>
                                     <input  id="password" type="password" class="form-control" name="password"  formControlName="password" placeholder="required" [class.is-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" required>
 								    <div class="invalid-feedback">
@@ -42,11 +43,13 @@
 							    	</div>
 								</div>
 
-								<div *ngIf="!isLogin" class="mb-3 form-group">
+								<div class="mb-3 form-group">
 									<label class="mb-2 text-muted" for="confirm">Confirm password</label>
-									<input id="confirm" type="password" class="form-control" name="confirm" placeholder="required" formControlName="confirm" required>
-									<div *ngIf="registerForm.hasError('passwordMismatch')" class="invalid-feedback">
-									  Password confirmation does not match the password.
+									<input id="confirm" type="password" class="form-control" name="confirm" placeholder="required" formControlName="confirm" 
+									[class.is-invalid]="(registerForm.get('confirm')?.invalid && registerForm.get('confirm')?.touched) || 
+									(registerForm.get('confirm')?.value != registerForm.get('password')?.value)  " required>
+									<div class="invalid-feedback">
+									  Password does not match.
 									</div>
 								  </div>
 								  
