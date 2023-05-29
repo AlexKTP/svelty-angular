@@ -15,10 +15,10 @@
 							<h1 *ngIf="!isLogin" class="fs-4 card-title fw-bold mb-4">Register</h1>
                             <h1 *ngIf="isLogin" class="fs-4 card-title fw-bold mb-4">Login</h1>
 							<form  (ngSubmit)="registerFormSubmit()" [formGroup]="registerForm" method="POST" class="needs-validation" novalidate>
-								<div *ngIf="!isLogin" class="mb-3">
+								<div  class="mb-3">
 									<div class="form-group">
 									<label class="mb-2 text-muted" for="name">Name</label>
-									<input id="name" type="text" class="form-control" name="name" placeholder="required" formControlName="name" [class.is-invalid]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" required autofocus>									
+									<input id="name" type="text" class="form-control" name="name" placeholder="required" formControlName="name" [class.is-invalid]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" required>									
 									<div class="valid-feedback">Valid Username.</div>
 									<div class="invalid-feedback">
 										Name is required	
@@ -43,12 +43,12 @@
 							    	</div>
 								</div>
 
-								<div class="mb-3 form-group">
+								<div *ngIf="!isLogin" class="mb-3 form-group">
 									<label class="mb-2 text-muted" for="confirm">Confirm password</label>
 									<input id="confirm" type="password" class="form-control" name="confirm" placeholder="required" formControlName="confirm" 
 									[class.is-invalid]="(registerForm.get('confirm')?.invalid && registerForm.get('confirm')?.touched) || 
 									(registerForm.get('confirm')?.value != registerForm.get('password')?.value) ||
-									(registerForm.get('password')?.value.length  <8) " required>
+									(registerForm.get('password')?.value.size <8) " required>
 									<div class="invalid-feedback">
 										{{ getConfirmationPasswordValidationReason() }}
 									  </div>

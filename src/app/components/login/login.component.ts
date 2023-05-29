@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthServiceComponent } from 'src/app/services/auth-service/auth-service.component';
 
 
 
@@ -12,7 +13,6 @@ import { Observable } from 'rxjs';
 export class LoginComponent {
   @ViewChild('confirmPasswordInput') confirmPasswordInput!: ElementRef;
 
-
   emailRegex: RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   confirmationPasswordValidationReason: string = '';
@@ -22,12 +22,14 @@ export class LoginComponent {
   email: string = "";
   password: string = "";
   confirm: string = "";
+  token: string = "";
+
 
   isCompliant = false;
 
   registerForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private authService: AuthServiceComponent, private router: Router) { }
 
   // Add the validator to the form builder
   ngOnInit() {
@@ -42,7 +44,25 @@ export class LoginComponent {
   }
 
   registerFormSubmit() {
-    this.confirmationPasswordValidationReason = this.getConfirmationPasswordValidationReason();
+
+    if (this.isLogin) {
+      this.authService.login(this.registerForm.get('name')?.value, this.registerForm.get('email')?.value, this.registerForm.get('password')?.value).subscribe(
+        value => {
+          this.token = value?.token
+          if (this.token.length > 0) {
+            localStorage.setItem('token', this.token)
+            this.router.navigate(['/home'])
+          }
+
+        }
+      )
+    } else {
+      this.authService.register(this.registerForm.get('name')?.value, this.registerForm.get('password')?.value, this.registerForm.get('email')?.value).subscribe(
+        value => {
+          console.log('authservice' + value)
+        }
+      )
+    }
   }
 
 

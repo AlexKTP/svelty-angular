@@ -10,6 +10,9 @@ import { DatePipe } from '@angular/common';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthServiceComponent } from './services/auth-service/auth-service.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -17,16 +20,18 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NavbarComponent,
     CreateformComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    AuthServiceComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, AuthServiceComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

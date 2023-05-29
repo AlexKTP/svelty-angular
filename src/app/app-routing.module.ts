@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'form', component: CreateformComponent },
+  { path: 'home', component: HomeComponent }
   // Add more routes for other pages if needed
 ];
 
