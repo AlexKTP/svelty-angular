@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { IHero } from 'src/app/models/hero.interface';
 import { AuthServiceComponent } from 'src/app/services/auth-service/auth-service.component';
 
 
@@ -51,6 +52,16 @@ export class LoginComponent {
           this.token = value?.token
           if (this.token.length > 0) {
             localStorage.setItem('token', this.token)
+            const heroJson = JSON.parse(value.hero);
+
+            var hero: IHero = {
+              id: heroJson?.id,
+              name: heroJson?.username,
+              login: heroJson?.login,
+              creationDate: new Date(heroJson?.creationDate),
+              lastModification: new Date(heroJson?.lastModificationDate)
+            }
+            console.log(hero)
             this.router.navigate(['/home'])
           }
 
@@ -58,8 +69,13 @@ export class LoginComponent {
       )
     } else {
       this.authService.register(this.registerForm.get('name')?.value, this.registerForm.get('password')?.value, this.registerForm.get('email')?.value).subscribe(
-        value => {
-          console.log('authservice' + value)
+        {
+          next(value) {
+            console.log(value.message)
+          },
+          error(value) {
+            console.log(value)
+          }
         }
       )
     }

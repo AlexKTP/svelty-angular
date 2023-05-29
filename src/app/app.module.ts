@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthServiceComponent } from './services/auth-service/auth-service.component';
 import { HttpClientModule } from '@angular/common/http';
+import { HeroComponent } from './components/hero/hero.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
     NavbarComponent,
     CreateformComponent,
     HomeComponent,
-    LoginComponent],
+    LoginComponent,
+    HeroComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

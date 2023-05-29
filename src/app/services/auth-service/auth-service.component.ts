@@ -17,13 +17,13 @@ export class AuthServiceComponent {
 
   register(username: string, password: string, login: string): Observable<any> {
     const url = `${this.apiUrl}/register`;
-    const body = JSON.stringify({ username: username, login: login, password: password });
+    const body = JSON.stringify({ username: username, login: login, password: password, creationDate: null, lastModificationDate: null });
     return this.http.post(url, body, { headers: this.headers });
   }
 
   login(username: string, login: string, password: string): Observable<any> {
     const url = `${this.apiUrl}/login`;
-    const body = JSON.stringify({ username: username, login: login, password: password });
+    const body = JSON.stringify({ username: username, login: login, password: password, creationDate: null, lastModificationDate: null });
     return this.http.post(url, body, { headers: this.headers });
   }
 

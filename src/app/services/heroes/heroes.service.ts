@@ -14,9 +14,10 @@ export class HeroesService {
   constructor(private http: HttpClient) { }
 
   getAllHeroes() {
+    console.log("Fetching all heroes...")
     return this.http.get(this.apiUrl + '/users', { headers: this.headers }).subscribe({
       next(value) {
-        console.log(value);
+        console.log("AllHeroes are retrieved");
       },
     }
     )
