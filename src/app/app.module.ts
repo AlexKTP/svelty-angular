@@ -20,9 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
     NavbarComponent,
     CreateformComponent,
     HomeComponent,
-    LoginComponent,
-    AuthServiceComponent
-  ],
+    LoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -31,7 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
     NgbModule,
     HttpClientModule
   ],
-  providers: [DatePipe, AuthServiceComponent],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

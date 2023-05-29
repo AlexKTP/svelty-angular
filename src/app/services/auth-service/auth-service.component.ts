@@ -1,12 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 
-@Component({
-  selector: 'app-auth-service',
-  templateUrl: './auth-service.component.html',
-  styleUrls: ['./auth-service.component.css']
+@Injectable({
+  providedIn: 'root'
 })
 export class AuthServiceComponent {
 
@@ -15,7 +13,6 @@ export class AuthServiceComponent {
   private apiUrl = 'http://localhost:8080';
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Connection': 'keep-alive',
   });
 
   register(username: string, password: string, login: string): Observable<any> {
