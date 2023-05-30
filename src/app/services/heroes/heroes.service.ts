@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { LoggerService } from '../logger/logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +12,10 @@ export class HeroesService {
     Authorization: `Bearer ${localStorage.getItem('token')}`
   });
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private logger: LoggerService) { }
 
   getAllHeroes() {
-    console.log("Fetching all heroes...")
-    return this.http.get(this.apiUrl + '/users', { headers: this.headers }).subscribe({
-      next(value) {
-        console.log("AllHeroes are retrieved");
-      },
-    }
-    )
+    this.logger.info(HeroesService.name + ' Fetching all heroes')
+    return this.http.get(this.apiUrl + '/users', { headers: this.headers })
   }
 }
