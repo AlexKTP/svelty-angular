@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IHero } from 'src/app/models/hero.interface';
 import { AuthServiceComponent } from 'src/app/services/auth-service/auth-service.component';
+import { LoggerService } from 'src/app/services/logger/logger.service';
 
 
 
@@ -30,7 +31,7 @@ export class LoginComponent {
 
   registerForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthServiceComponent, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private authService: AuthServiceComponent, private router: Router, private logger: LoggerService) { }
 
   // Add the validator to the form builder
   ngOnInit() {
@@ -47,6 +48,7 @@ export class LoginComponent {
   registerFormSubmit() {
 
     if (this.isLogin) {
+      this.logger.info(LoginComponent.name + ' Log in Attemp...')
       this.authService.login(this.registerForm.get('name')?.value, this.registerForm.get('email')?.value, this.registerForm.get('password')?.value).subscribe(
         value => {
           this.token = value?.token
@@ -61,23 +63,30 @@ export class LoginComponent {
               creationDate: new Date(heroJson?.creationDate),
               lastModification: new Date(heroJson?.lastModificationDate)
             }
-            console.log(hero)
+            this.logger.info(LoginComponent.name + ' Logged in successfully!')
             this.router.navigate(['/home'])
           }
 
+        },
+        error => this.logger.error(LoginComponent.name + ' ' + error.message + ' ' + error.status),
+        () => {
+          // nothing to do during the complete state
         }
       )
     } else {
       this.authService.register(this.registerForm.get('name')?.value, this.registerForm.get('password')?.value, this.registerForm.get('email')?.value).subscribe(
         {
-          next(value) {
-            console.log(value.message)
+          next: (nextValue) => {
+            this.logger.info(LoginComponent.name + ' Register Successfully!')
           },
-          error(value) {
-            console.log(value)
+          error: (error) => {
+            this.logger.error(LoginComponent.name + ' ' + error.message + ' ' + error.status)
+          },
+          complete: () => {
+            // Handle completion
           }
         }
-      )
+      );
     }
   }
 
