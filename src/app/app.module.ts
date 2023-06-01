@@ -13,6 +13,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthServiceComponent } from './services/auth-service/auth-service.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HeroComponent } from './components/hero/hero.component';
+import { QuotesComponent } from './services/quotes/quotes.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { HeroComponent } from './components/hero/hero.component';
     CreateformComponent,
     HomeComponent,
     LoginComponent,
-    HeroComponent],
+    HeroComponent,
+    QuotesComponent,
+    DashboardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
