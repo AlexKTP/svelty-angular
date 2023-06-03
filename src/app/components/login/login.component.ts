@@ -46,7 +46,7 @@ export class LoginComponent {
     this.confirmationPasswordValidationReason = this.getConfirmationPasswordValidationReason();
 
     if (localStorage.getItem('svelty-token') != null && typeof localStorage.getItem('svelty-token') == 'string') {
-      this.router.navigate(['/home'])
+      this.router.navigate(['/error'])
     }
   }
 

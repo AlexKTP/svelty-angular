@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HeroComponent } from './components/hero/hero.component';
 import { QuotesComponent } from './services/quotes/quotes.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     LoginComponent,
     HeroComponent,
     QuotesComponent,
-    DashboardComponent],
+    DashboardComponent,
+    NotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
