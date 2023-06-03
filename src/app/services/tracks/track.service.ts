@@ -9,7 +9,7 @@ export class TrackService {
 
   private apiUrl: string = "http://localhost:8080"
   private headers = new HttpHeaders({
-    Authorization: `Bearer ${localStorage.getItem('token')}`,
+    Authorization: `Bearer ${localStorage.getItem('svelty-token')}`,
     'Content-Type': 'application/json'
   });
 
