@@ -9,7 +9,7 @@ export class HeroesService {
 
   private apiUrl: string = "http://localhost:8080"
   private headers = new HttpHeaders({
-    Authorization: `Bearer ${localStorage.getItem('token')}`
+    Authorization: `Bearer ${localStorage.getItem('svelty-token')}`
   });
 
   constructor(private http: HttpClient, private logger: LoggerService) { }

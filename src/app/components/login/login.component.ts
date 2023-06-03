@@ -35,6 +35,7 @@ export class LoginComponent {
 
   // Add the validator to the form builder
   ngOnInit() {
+
     this.registerForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern(this.emailRegex)]],
@@ -43,6 +44,10 @@ export class LoginComponent {
     }, {});
 
     this.confirmationPasswordValidationReason = this.getConfirmationPasswordValidationReason();
+
+    if (localStorage.getItem('svelty-token') != null && typeof localStorage.getItem('svelty-token') == 'string') {
+      this.router.navigate(['/home'])
+    }
   }
 
   registerFormSubmit() {
@@ -54,7 +59,7 @@ export class LoginComponent {
           this.token = value?.token
           if (this.token.length > 0) {
             localStorage.clear;
-            localStorage.setItem('token', this.token)
+            localStorage.setItem('svelty-token', this.token)
             const heroJson = JSON.parse(value.hero);
 
             var hero: IHero = {
