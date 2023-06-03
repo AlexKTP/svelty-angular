@@ -21,8 +21,8 @@ export class CreateformComponent implements OnInit {
   constructor(private builder: FormBuilder, private datePipe: DatePipe, private trackService: TrackService, private logger: LoggerService) { }
 
   ngOnInit() {
-    this.initForm()
     this.initDate()
+    this.initForm()
   }
 
   registerFormSubmit() {
