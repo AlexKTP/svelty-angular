@@ -53,6 +53,7 @@ export class LoginComponent {
         value => {
           this.token = value?.token
           if (this.token.length > 0) {
+            localStorage.clear;
             localStorage.setItem('token', this.token)
             const heroJson = JSON.parse(value.hero);
 
@@ -68,7 +69,10 @@ export class LoginComponent {
           }
 
         },
-        error => this.logger.error(LoginComponent.name + ' ' + error.message + ' ' + error.status),
+        error => {
+          this.logger.error(LoginComponent.name + ' ' + error.message + ' ' + error.status)
+          this.router.navigate(['/'])
+        },
         () => {
           // nothing to do during the complete state
         }
