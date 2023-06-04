@@ -10,12 +10,13 @@ import { DatePipe } from '@angular/common';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AuthServiceComponent } from './services/auth-service/auth-service.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HeroComponent } from './components/hero/hero.component';
 import { QuotesComponent } from './services/quotes/quotes.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ToastComponent } from './components/toast/toast.component';
+import { ToasterComponent } from './components/toaster/toaster.component';
 
 
 @NgModule({
@@ -28,7 +29,9 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     HeroComponent,
     QuotesComponent,
     DashboardComponent,
-    NotFoundComponent],
+    NotFoundComponent,
+    ToastComponent,
+    ToasterComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
