@@ -4,6 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ITrack } from 'src/app/models/track.interface';
 import { TrackService } from 'src/app/services/tracks/track.service';
 import { LoggerService } from 'src/app/services/logger/logger.service';
+import { mergeMap } from 'rxjs';
+import { ToastService } from 'src/app/services/toast/toast.service';
+import { EventTypes } from 'src/app/models/event-types';
 
 @Component({
   selector: 'app-createform',
@@ -17,8 +20,12 @@ export class CreateformComponent implements OnInit {
 
   registerForm!: FormGroup;
 
+  backEndResponse: string = ''
+  newTrackAdded: boolean = false
+  showToast: boolean = false
 
-  constructor(private builder: FormBuilder, private datePipe: DatePipe, private trackService: TrackService, private logger: LoggerService) { }
+
+  constructor(private builder: FormBuilder, private datePipe: DatePipe, private trackService: TrackService, private logger: LoggerService, private toastService: ToastService) { }
 
   ngOnInit() {
     this.initDate()
@@ -26,6 +33,7 @@ export class CreateformComponent implements OnInit {
   }
 
   registerFormSubmit() {
+
     if (this.registerForm.get('weight')?.value == null || this.registerForm.get('weight')?.value < 0) {
     }
     const track: ITrack = {
@@ -37,18 +45,29 @@ export class CreateformComponent implements OnInit {
       leg: this.registerForm.get('thigh')?.value,
       date: this.registerForm.get('date')?.value,
       toSynchronize: true,
-      userId: 17
+      userId: Number(localStorage.getItem('svelty-hero-id'))
     }
 
     this.trackService.addNewTrack(track).subscribe({
       next: (nextValue) => {
+
+
+        // Generate the text to be displayed in the toast
+        const bodyMessage = 'A new record is saved!'; // Replace with the generated text
+        const title = 'Successfully Added'
+        this.toastService.showToast(title, bodyMessage, EventTypes.Success)
+
         this.logger.info(CreateformComponent.name + ' New track Added!')
       },
       error: (error) => {
         this.logger.error(CreateformComponent + ' ' + error.message + ' ' + error.status)
+        this.backEndResponse = error.message
+        const bodyMessage = this.backEndResponse; // Replace with the generated text
+        const title = 'Oops! Something goes wrong'
+        this.toastService.showToast(title, bodyMessage, EventTypes.Error)
       },
       complete: () => {
-        // Handle completion
+        //
       }
 
     })
@@ -81,3 +100,7 @@ export class CreateformComponent implements OnInit {
   }
 
 }
+
+
+
+

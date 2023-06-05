@@ -28,4 +28,8 @@ export class TrackService {
     return this.http.post(url, body, { headers: this.headers });
   }
 
+  getTracks() {
+    return this.http.get(`${this.apiUrl}/tracks`, { headers: this.headers, params: { userId: localStorage.getItem('svelty-hero-id') as string } });
+  }
+
 }

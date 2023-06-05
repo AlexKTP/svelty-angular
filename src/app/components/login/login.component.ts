@@ -1,9 +1,11 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { EventTypes } from 'src/app/models/event-types';
 import { IHero } from 'src/app/models/hero.interface';
 import { AuthServiceComponent } from 'src/app/services/auth-service/auth-service.component';
 import { LoggerService } from 'src/app/services/logger/logger.service';
+import { ToastService } from 'src/app/services/toast/toast.service';
 
 
 
@@ -31,7 +33,7 @@ export class LoginComponent {
 
   registerForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthServiceComponent, private router: Router, private logger: LoggerService) { }
+  constructor(private formBuilder: FormBuilder, private authService: AuthServiceComponent, private router: Router, private logger: LoggerService, private toastService: ToastService) { }
 
   // Add the validator to the form builder
   ngOnInit() {
@@ -46,7 +48,7 @@ export class LoginComponent {
     this.confirmationPasswordValidationReason = this.getConfirmationPasswordValidationReason();
 
     if (localStorage.getItem('svelty-token') != null && typeof localStorage.getItem('svelty-token') == 'string') {
-      this.router.navigate(['/error'])
+      this.router.navigate(['/form'])
     }
   }
 
@@ -69,12 +71,17 @@ export class LoginComponent {
               creationDate: new Date(heroJson?.creationDate),
               lastModification: new Date(heroJson?.lastModificationDate)
             }
+
+            this.toastService.showToast('LOGGED IN', 'Welcome back hero!', EventTypes.Info)
+
+            localStorage.setItem('svelty-hero-id', hero?.id)
             this.logger.info(LoginComponent.name + ' Logged in successfully!')
             this.router.navigate(['/home'])
           }
 
         },
         error => {
+          this.toastService.showToast('ERROR', 'Oops! Something goes wrong!', EventTypes.Error)
           this.logger.error(LoginComponent.name + ' ' + error.message + ' ' + error.status)
           this.router.navigate(['/'])
         },
@@ -86,7 +93,9 @@ export class LoginComponent {
       this.authService.register(this.registerForm.get('name')?.value, this.registerForm.get('password')?.value, this.registerForm.get('email')?.value).subscribe(
         {
           next: (nextValue) => {
-            this.logger.info(LoginComponent.name + ' Register Successfully!')
+            this.isLogin = true;
+            this.router.navigate(['/register'])
+            this.toastService.showToast('REGISTERED', 'Welcome, please log in', EventTypes.Info)
           },
           error: (error) => {
             this.logger.error(LoginComponent.name + ' ' + error.message + ' ' + error.status)
