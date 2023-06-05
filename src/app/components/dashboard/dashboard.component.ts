@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Chart, registerables, ChartItem } from 'chart.js';
 import { ITrack } from 'src/app/models/track.interface';
 import { LoggerService } from 'src/app/services/logger/logger.service';
-import { TrackService } from 'src/app/services/tracks/track.service';
+import { TrackService } from 'src/app/services/tracks/track.service'
 
 
 @Component({

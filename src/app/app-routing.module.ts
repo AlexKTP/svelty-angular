@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { CreateformComponent } from './components/createform/createform.component';
 import { LoginComponent } from './components/login/login.component';
-import { canActivate, canActivateChild } from './utils/permission';
+import { canActivate } from './utils/permission';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
 const routes: Routes = [
