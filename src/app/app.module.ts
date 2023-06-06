@@ -12,7 +12,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { HeroComponent } from './components/hero/hero.component';
-import { QuotesComponent } from './services/quotes/quotes.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ToastComponent } from './components/toast/toast.component';
@@ -27,7 +26,6 @@ import { ToasterComponent } from './components/toaster/toaster.component';
     HomeComponent,
     LoginComponent,
     HeroComponent,
-    QuotesComponent,
     DashboardComponent,
     NotFoundComponent,
     ToastComponent,
