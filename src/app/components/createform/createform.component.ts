@@ -7,6 +7,8 @@ import { LoggerService } from 'src/app/services/logger/logger.service';
 import { mergeMap } from 'rxjs';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { EventTypes } from 'src/app/models/event-types';
+import { IQuote } from 'src/app/models/quotes.interface';
+import { QuotesService } from 'src/app/services/quotes/quotes.service';
 
 @Component({
   selector: 'app-createform',
@@ -18,6 +20,9 @@ export class CreateformComponent implements OnInit {
   firstDayOfTheTear: string | null | undefined;
   lastDayOfTheTear: string | null | undefined;
 
+  quote: IQuote | null | undefined;
+
+
   registerForm!: FormGroup;
 
   backEndResponse: string = ''
@@ -25,11 +30,29 @@ export class CreateformComponent implements OnInit {
   showToast: boolean = false
 
 
-  constructor(private builder: FormBuilder, private datePipe: DatePipe, private trackService: TrackService, private logger: LoggerService, private toastService: ToastService) { }
+  constructor(private builder: FormBuilder,
+    private datePipe: DatePipe,
+    private trackService: TrackService,
+    private logger: LoggerService,
+    private toastService: ToastService,
+    private quoteService: QuotesService) { }
 
   ngOnInit() {
     this.initDate()
     this.initForm()
+    this.getQuote()
+  }
+  getQuote() {
+    this.quoteService.getRandomQuote().subscribe({
+      next: (nextValue) => {
+        this.quote = nextValue as IQuote
+        this.logger.info(CreateformComponent.name + ' Quote: ' + this.quote.content)
+
+      },
+      error: (error) => {
+        this.logger.error(CreateformComponent + ' ' + error.message + ' ' + error.status)
+      }
+    })
   }
 
   registerFormSubmit() {
