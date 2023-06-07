@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Chart, registerables, ChartItem } from 'chart.js';
+import { _DeepPartialArray } from 'chart.js/dist/types/utils';
 import { ITrack } from 'src/app/models/track.interface';
 import { LoggerService } from 'src/app/services/logger/logger.service';
 import { TrackService } from 'src/app/services/tracks/track.service'
@@ -65,6 +66,8 @@ function initChart(listOfTracks: ITrack[]) {
 
   const mydata = listOfTracks.map((track) => { return track.weight });
 
+
+
   new Chart(ctx, {
     type: 'line',
     data: {
@@ -72,13 +75,40 @@ function initChart(listOfTracks: ITrack[]) {
       datasets: [{
         label: 'Weight',
         data: mydata,
-        borderWidth: 1
+
+        borderWidth: 3,
+        pointStyle: 'circle',
+        pointRadius: 10,
+        pointHoverRadius: 15
       }]
     },
     options: {
+      responsive: true,
+      animations: {
+        tension: {
+          duration: 1000,
+          easing: 'linear',
+          from: 1,
+          to: 0,
+          loop: true
+        }
+      },
+      plugins: {
+        title: {
+          display: true
+        }
+      },
       scales: {
+        x: {
+          max: 10,
+        },
         y: {
-          beginAtZero: true
+          suggestedMin: 50,
+          suggestedMax: 80,
+          ticks: {
+            // forces step size to be 50 units
+            stepSize: 2
+          }
         }
       }
     }

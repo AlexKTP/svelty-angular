@@ -9,6 +9,7 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 import { EventTypes } from 'src/app/models/event-types';
 import { IQuote } from 'src/app/models/quotes.interface';
 import { QuotesService } from 'src/app/services/quotes/quotes.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-createform',
@@ -35,7 +36,8 @@ export class CreateformComponent implements OnInit {
     private trackService: TrackService,
     private logger: LoggerService,
     private toastService: ToastService,
-    private quoteService: QuotesService) { }
+    private quoteService: QuotesService,
+    private router: Router) { }
 
   ngOnInit() {
     this.initDate()
@@ -79,7 +81,6 @@ export class CreateformComponent implements OnInit {
         const bodyMessage = 'A new record is saved!'; // Replace with the generated text
         const title = 'Successfully Added'
         this.toastService.showToast(title, bodyMessage, EventTypes.Success)
-
         this.logger.info(CreateformComponent.name + ' New track Added!')
       },
       error: (error) => {
@@ -90,7 +91,8 @@ export class CreateformComponent implements OnInit {
         this.toastService.showToast(title, bodyMessage, EventTypes.Error)
       },
       complete: () => {
-        //
+        //wait 3 seconds then redirect to home
+        setTimeout(() => { this.router.navigate(['/home']) }, 1000);
       }
 
     })
