@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -7,13 +8,30 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
 
-  isButtonClicked = false;
 
-  toggleButtonClicked() {
-    this.isButtonClicked = !this.isButtonClicked;
+
+  constructor(private router: Router, private renderer: Renderer2) {
   }
 
-  getButtonLink() {
-    return this.isButtonClicked ? '' : '/form'; // Replace with your desired route paths
+  ngOnInit() {
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    // Add event listeners to each nav link
+    navLinks.forEach(navLink => {
+      this.renderer.listen(navLink, 'mouseover', () => {
+        this.renderer.addClass(navLink, 'active'); // Add the 'active' class on mouseover
+      });
+
+      this.renderer.listen(navLink, 'mouseout', () => {
+        this.renderer.removeClass(navLink, 'active'); // Remove the 'active' class on mouseout
+      });
+    });
+
   }
+
+  navigateToForm() {
+    this.router.navigate(['/form'], { state: { animation: 'home <=> form' } });
+  }
+
+
 }

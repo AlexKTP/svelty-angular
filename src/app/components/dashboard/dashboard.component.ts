@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Chart, registerables, ChartItem } from 'chart.js';
 import { _DeepPartialArray } from 'chart.js/dist/types/utils';
 import { ITrack } from 'src/app/models/track.interface';
@@ -19,18 +18,13 @@ export class DashboardComponent {
 
   listOfTracks: ITrack[] = []
 
-  constructor(private trackService: TrackService, private logger: LoggerService, private router: Router) {
+  constructor(private trackService: TrackService, private logger: LoggerService) {
     Chart.register(...registerables);
   }
 
-  navigateToForm() {
-    this.router.navigate(['/form'], { state: { animation: 'home <=> form' } });
-  }
-
-
-
-
   ngOnInit() {
+
+
     this.trackService.getTracks().subscribe({
       next: (nextValue) => {
 

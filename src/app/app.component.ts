@@ -12,6 +12,7 @@ import { slideInAnimation } from './utils/slideinanimation';
 })
 export class AppComponent {
   title = 'Svelty';
+
   constructor(private contexts: ChildrenOutletContexts) { }
 
   getRouteAnimationData() {
