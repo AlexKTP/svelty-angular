@@ -18,4 +18,10 @@
     --bs-bg-opacity: .1;
     background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
   }
+
+  #log{
+    cursor: pointer; }
+
+  #reg{
+    cursor: pointer; }
   

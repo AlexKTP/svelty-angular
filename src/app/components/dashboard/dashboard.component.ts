@@ -1,23 +1,33 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Chart, registerables, ChartItem } from 'chart.js';
 import { _DeepPartialArray } from 'chart.js/dist/types/utils';
 import { ITrack } from 'src/app/models/track.interface';
 import { LoggerService } from 'src/app/services/logger/logger.service';
 import { TrackService } from 'src/app/services/tracks/track.service'
+import { slideInAnimation } from 'src/app/utils/slideinanimation';
 
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  animations: [slideInAnimation]
+
 })
 export class DashboardComponent {
 
   listOfTracks: ITrack[] = []
 
-  constructor(private trackService: TrackService, private logger: LoggerService) {
+  constructor(private trackService: TrackService, private logger: LoggerService, private router: Router) {
     Chart.register(...registerables);
   }
+
+  navigateToForm() {
+    this.router.navigate(['/form'], { state: { animation: 'home <=> form' } });
+  }
+
+
 
 
   ngOnInit() {
@@ -72,16 +82,33 @@ function initChart(listOfTracks: ITrack[]) {
     type: 'line',
     data: {
       labels: myvalues,
-      datasets: [{
-        label: 'Weight',
-        data: mydata,
+      datasets: [
+        {
+          label: 'Weight',
+          data: mydata,
+          borderColor: '#3489eb',
+          segment: {
+            borderColor: (ctx) => {
+              const currentValue = ctx.p0.parsed.y;
+              const previousValue = ctx.p1.parsed.y;
 
-        borderWidth: 3,
-        pointStyle: 'circle',
-        pointRadius: 10,
-        pointHoverRadius: 15
-      }]
+              if (currentValue === previousValue) {
+                return '#3489eb'; // Same value
+              } else if (currentValue > previousValue) {
+                return 'green'; // Higher value
+              } else {
+                return 'red'; // Lower value
+              }
+            }
+          },
+          borderWidth: 3,
+          pointStyle: 'circle',
+          pointRadius: 10,
+          pointHoverRadius: 15
+        }
+      ]
     },
+
     options: {
       responsive: true,
       animations: {
@@ -98,19 +125,23 @@ function initChart(listOfTracks: ITrack[]) {
           display: true
         }
       },
+      interaction: {
+        intersect: false
+      },
       scales: {
         x: {
-          max: 10,
+          max: 10
         },
         y: {
           suggestedMin: 50,
           suggestedMax: 80,
           ticks: {
-            // forces step size to be 50 units
             stepSize: 2
           }
         }
       }
     }
   });
+
+
 }

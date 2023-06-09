@@ -70,11 +70,11 @@
 							</form>
 						</div>
 						<div class="card-footer py-3 border-0">
-							<div *ngIf="!isLogin" class="text-center">
-								Already have an account? <a (click)="toggleButtonClicked()" href="#" class="text-dark">Login</a>
+							<div *ngIf="!isLogin" class="text-center" id="reg">
+								Already have an account? <a (click)="toggleButtonClicked()" class="text-dark">Login</a>
 							</div>
-                            <div *ngIf="isLogin" class="text-center">
-								Not yet registered? <a (click)="toggleButtonClicked()" href="#" class="text-dark">Register</a>
+                            <div *ngIf="isLogin" class="text-center" id="log">
+								Not yet registered? <a (click)="toggleButtonClicked()"  class="text-dark">Register</a>
 							</div>
 						</div>
 					</div>

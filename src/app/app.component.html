@@ -1,6 +1,4 @@
-
-<router-outlet>
-    
-<!-- Toaster -->
-<app-toaster></app-toaster>
-</router-outlet>
+<div [@routeAnimations]="getRouteAnimationData()">
+    <app-toaster></app-toaster>
+    <router-outlet></router-outlet>
+  </div>
