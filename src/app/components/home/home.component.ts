@@ -9,21 +9,10 @@ import { LoggerService } from 'src/app/services/logger/logger.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private heroesService: HeroesService, private logger: LoggerService) { }
+  userLoggedIn: boolean = true;
 
   ngOnInit(): void {
-    this.heroesService.getAllHeroes().subscribe({
-      next: (nextValue) => {
-        this.logger.info(HomeComponent.name + ' ' + ' All heroes retrieved')
-      },
-      error: (error) => {
-        this.logger.error(HomeComponent + ' ' + error.message + ' ' + error.status)
-      },
-      complete: () => {
-        // Handle completion
-      }
-    }
-    )
+
   }
 
 

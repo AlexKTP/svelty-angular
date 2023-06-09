@@ -1,3 +1,9 @@
-nav .navbar-nav li a{
-    color: white !important;
-    }
+a:hover svg {
+    fill: #fff;
+}
+
+#profile a:hover svg {
+    fill:#0079FF ;
+    opacity: 0.8;
+    scale: 1.1;
+}
