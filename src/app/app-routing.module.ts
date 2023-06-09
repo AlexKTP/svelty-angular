@@ -7,11 +7,11 @@ import { canActivate } from './utils/permission';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: 'register', component: LoginComponent },
+  { path: '', redirectTo: '/register', pathMatch: 'full' }, // redirect to `first-component`
   { path: 'form', canActivate: [canActivate], component: CreateformComponent },
-  { path: 'home', canActivate: [canActivate], component: HomeComponent },
+  { path: 'home', canActivate: [canActivate], component: HomeComponent, data: { animation: 'home <=> form' } },
   { path: '**', canActivate: [canActivate], component: NotFoundComponent },
-  // Add more routes for other pages if needed
 ];
 
 @NgModule({
