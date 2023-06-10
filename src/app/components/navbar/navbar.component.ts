@@ -1,5 +1,6 @@
 import { Component, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
+import { HeroesService } from 'src/app/services/heroes/heroes.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +11,7 @@ export class NavbarComponent {
 
 
 
-  constructor(private router: Router, private renderer: Renderer2) {
+  constructor(private router: Router, private renderer: Renderer2, private heroService: HeroesService) {
   }
 
   ngOnInit() {
@@ -28,6 +29,11 @@ export class NavbarComponent {
     });
 
   }
+
+  logOut() {
+    this.heroService.logOut();
+  }
+
 
   navigateToForm() {
     this.router.navigate(['/form'], { state: { animation: 'home <=> form' } });
