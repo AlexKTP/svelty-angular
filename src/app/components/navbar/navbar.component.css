@@ -7,3 +7,8 @@ a:hover svg {
     opacity: 0.8;
     scale: 1.1;
 }
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: #0079FF ;
+    color: #fff;
+  }
