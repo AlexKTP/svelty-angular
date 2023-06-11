@@ -22,6 +22,9 @@ export class DashboardComponent {
     Chart.register(...registerables);
   }
 
+  weightLoss: number = 0;
+  isLoss = false;
+
   ngOnInit() {
 
 
@@ -43,6 +46,10 @@ export class DashboardComponent {
           } as ITrack)
         }
         )
+
+        this.weightLoss = this.listOfTracks.length > 1 ? this.listOfTracks[0].weight - this.listOfTracks[this.listOfTracks.length - 1].weight : 0;
+        this.weightLoss = Math.round((this.weightLoss + Number.EPSILON) * 100) / 100
+        this.isLoss = this.weightLoss > 0;
 
         this.logger.info(DashboardComponent.name + ' Tracks loaded!')
       },
@@ -78,7 +85,7 @@ function initChart(listOfTracks: ITrack[]) {
       labels: myvalues,
       datasets: [
         {
-          label: 'Weight',
+          label: 'Weight (kg)' + ' - Your progress: ' + (mydata.length > 1 ? Math.round(((mydata[0] - mydata[mydata.length - 1]) + Number.EPSILON) * 100) / 100 * -1 : 0) + ' kg',
           data: mydata,
           borderColor: '#3489eb',
           segment: {
@@ -116,21 +123,22 @@ function initChart(listOfTracks: ITrack[]) {
       },
       plugins: {
         title: {
-          display: true
+          display: false,
         }
       },
       interaction: {
         intersect: false
       },
       scales: {
+
         x: {
           max: 10
         },
         y: {
-          suggestedMin: 50,
-          suggestedMax: 80,
+          suggestedMin: mydata.length > 0 ? mydata[0] - 5 : 50,
+          suggestedMax: mydata.length > 0 ? mydata[0] + 5 : 50,
           ticks: {
-            stepSize: 2
+            stepSize: 0.5
           }
         }
       }

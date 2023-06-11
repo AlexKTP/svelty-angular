@@ -18,6 +18,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { ToasterComponent } from './components/toaster/toaster.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { ToasterComponent } from './components/toaster/toaster.component';
     DashboardComponent,
     NotFoundComponent,
     ToastComponent,
-    ToasterComponent],
+    ToasterComponent,
+    ProfileComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

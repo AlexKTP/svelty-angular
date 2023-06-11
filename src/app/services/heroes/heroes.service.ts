@@ -20,17 +20,9 @@ export class HeroesService {
     return this.http.get(this.apiUrl + '/users', { headers: this.headers })
   }
 
-  logOut() {
-    this.http.post(this.apiUrl + '/logout', {}, { headers: this.headers, params: { userId: localStorage.getItem('svelty-hero-id') as string } }).subscribe({
-      next: data => {
-        this.logger.info(HeroesService.name + ' Logged out')
-        localStorage.removeItem('svelty-token');
-        this.router.navigate(['/login'], { state: { animation: 'home <=> login' } });
-      },
-      error: error => {
-        this.logger.error(HeroesService.name + ' Error logging out: ' + error.error.message)
-      }
-    })
+  getHeroById() {
+    this.logger.info(HeroesService.name + ' Fetching hero by id: ' + localStorage.getItem('svelty-hero-id') as string)
+    return this.http.get(this.apiUrl + '/user', { headers: this.headers, params: { id: localStorage.getItem('svelty-hero-id') as string } });
 
   }
 }
