@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EventTypes } from 'src/app/models/event-types';
 import { IHero } from 'src/app/models/hero.interface';
-import { AuthServiceComponent } from 'src/app/services/auth-service/auth-service.component';
+import { AuthService } from 'src/app/services/auth-service/auth-service.service';
 import { LoggerService } from 'src/app/services/logger/logger.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 
@@ -33,7 +33,7 @@ export class LoginComponent {
 
   registerForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthServiceComponent, private router: Router, private logger: LoggerService, private toastService: ToastService) { }
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router, private logger: LoggerService, private toastService: ToastService) { }
 
   // Add the validator to the form builder
   ngOnInit() {
@@ -76,7 +76,6 @@ export class LoginComponent {
 
             localStorage.setItem('svelty-hero-id', hero?.id)
             this.logger.info(LoginComponent.name + ' Logged in successfully!')
-            this.router.navigate(['/home'])
           }
 
         },
@@ -86,7 +85,7 @@ export class LoginComponent {
           this.router.navigate(['/'])
         },
         () => {
-          // nothing to do during the complete state
+          this.router.navigate(['/home'])
         }
       )
     } else {

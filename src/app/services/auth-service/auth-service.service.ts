@@ -1,12 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthServiceComponent {
+export class AuthService {
 
   constructor(private http: HttpClient) { }
 
@@ -17,12 +17,14 @@ export class AuthServiceComponent {
 
   register(username: string, password: string, login: string): Observable<any> {
     const url = `${this.apiUrl}/register`;
+    localStorage.clear();
     const body = JSON.stringify({ username: username, login: login, password: password, creationDate: null, lastModificationDate: null });
     return this.http.post(url, body, { headers: this.headers });
   }
 
   login(username: string, login: string, password: string): Observable<any> {
     const url = `${this.apiUrl}/login`;
+    localStorage.clear();
     const body = JSON.stringify({ username: username, login: login, password: password, creationDate: null, lastModificationDate: null });
     return this.http.post(url, body, { headers: this.headers });
   }
@@ -34,9 +36,10 @@ export class AuthServiceComponent {
     });
 
     const url = `${this.apiUrl}/token`;
-    return this.http.get(url, { headers: this.headers });
+    return this.http.get(url, { headers: this.headers, params: { id: localStorage.getItem('svelty-hero-id') as string } });
   }
 
-
-
+  logOut() {
+    return this.http.post(this.apiUrl + '/logout', {}, { headers: this.headers, params: { id: localStorage.getItem('svelty-hero-id') as string } })
+  }
 }

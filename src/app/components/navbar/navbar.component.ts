@@ -1,7 +1,7 @@
 import { Component, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
-import { HeroesService } from 'src/app/services/heroes/heroes.service';
-
+import { AuthService } from 'src/app/services/auth-service/auth-service.service';
+import { LoggerService } from 'src/app/services/logger/logger.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -11,7 +11,7 @@ export class NavbarComponent {
 
 
 
-  constructor(private router: Router, private renderer: Renderer2, private heroService: HeroesService) {
+  constructor(private router: Router, private renderer: Renderer2, private authService: AuthService, private logger: LoggerService) {
   }
 
   ngOnInit() {
@@ -31,7 +31,19 @@ export class NavbarComponent {
   }
 
   logOut() {
-    this.heroService.logOut();
+    this.authService.logOut().subscribe({
+      next: (nextValue) => {
+        localStorage.clear();
+        this.logger.info(NavbarComponent.name + ' User logged out!')
+      },
+      error: (errorValue) => {
+        this.logger.error(NavbarComponent.name + ' Error logging out!')
+      },
+      complete: () => {
+        this.router.navigate(['/login'])
+        this.logger.info(NavbarComponent.name + ' Logout completed!')
+      }
+    });
   }
 
 
