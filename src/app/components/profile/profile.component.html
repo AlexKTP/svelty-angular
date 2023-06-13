@@ -1,0 +1,32 @@
+<div class="container rounded bg-white">
+    <div class="d-flex row vh-100 w-100 align-items-center justify-content-center">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3"><img class="rounded-circle mt-5" width="150px" src="../../../assets/svg/undraw_drink_coffee_jdqb.svg"><span class="font-weight-bold">{{hero?.name != null ? hero?.name: ""}}</span><span class="text-black-50">{{hero?.login}}</span><span> </span></div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="text-right">Profile Settings</h2>
+                </div>
+                <form (ngSubmit)="registerFormSubmit()" [formGroup]="registerForm" method="POST"  class="p-4 p-md-5 border rounded-3 bg-light" data-bitwarden-watching="1">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="username" placeholder="username" formControlName="username" value="{{heroDTO?.username}}" required>
+                      <label for="floatingUsername">Username</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                      <input type="number" class="form-control" id="floatingWeight" placeholder="Optional (kg)" formControlName="weight" value="{{heroDTO?.goal?.weight}}">
+                      <label for="floatingWeight">Weight</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                      <input  class="form-control" type="date" id="datepicker" name="trip-start" 
+                      value="{{deadline != null ? deadline : currentDate}}"
+                      formControlName="date">  
+                      <label for="floatingDate">DeadLine</label>
+            
+                  </div>
+                   <button class="w-100 btn btn-lg btn-primary" type="submit">Save Profile</button>
+                  </form>
+            </div>
+        </div>
+    </div>
+</div>
