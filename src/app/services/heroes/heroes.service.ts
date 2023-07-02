@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoggerService } from '../logger/logger.service';
 import { Router } from '@angular/router';
+import { IHeroProfileDto } from 'src/app/models/hero-profile-dto.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -25,4 +26,16 @@ export class HeroesService {
     return this.http.get(this.apiUrl + '/user', { headers: this.headers, params: { id: localStorage.getItem('svelty-hero-id') as string } });
 
   }
+
+  updateHeroProfile(hero: IHeroProfileDto) {
+    this.logger.info(HeroesService.name + ' Updating hero: ' + hero.username)
+    return this.http.post(this.apiUrl + '/updateUser', hero, { headers: this.headers, params: { id: localStorage.getItem('svelty-hero-id') as string } })
+  }
+
+  getHeroProfile() {
+    this.logger.info(HeroesService.name + ' Fetching hero profile')
+    return this.http.get(this.apiUrl + '/userProfile', { headers: this.headers, params: { id: localStorage.getItem('svelty-hero-id') as string } });
+  }
+
+
 }
