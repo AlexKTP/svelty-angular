@@ -20,6 +20,8 @@ export class ProfileComponent implements OnInit {
   hero: IHero | null = null;
   heroDTO: IHeroProfileDto | null = null;
   deadline: string | null = null;
+  weight: number | null = null;
+  username: string | null = null;
 
   registerForm!: FormGroup;
   currentDate: string | null | undefined;
@@ -37,6 +39,8 @@ export class ProfileComponent implements OnInit {
     this.heroService.getHeroProfile().subscribe({
       next: (nextValue) => {
         this.heroDTO = nextValue as IHeroProfileDto
+        this.username = this.heroDTO.username
+        this.weight = this.heroDTO.goal?.weight != null ? this.heroDTO.goal?.weight : null
         this.deadline = this.getGoalDeadline(this.heroDTO) != null ? this.getGoalDeadline(this.heroDTO) : null
         this.logger.info(ProfileComponent.name + ' Hero profile loaded!' + this.heroDTO.username)
       },
@@ -57,8 +61,8 @@ export class ProfileComponent implements OnInit {
 
   initForm() {
     this.registerForm = this.formBuilder.group({
-      username: [null, Validators.required],
-      weight: [null, Validators.required],
+      username: [this.username],
+      weight: [this.weight],
       date: [this.deadline != null ? this.deadline : this.currentDate]
     }, {});
   }
@@ -73,6 +77,8 @@ export class ProfileComponent implements OnInit {
 
   registerFormSubmit() {
     this.logger.info(ProfileComponent.name + ' Form submitted!')
+
+    this.weight = this.registerForm.get('weight')?.value
 
     var goal: IGoal = {
       id: null,
@@ -92,7 +98,7 @@ export class ProfileComponent implements OnInit {
         this.heroDTO = nextValue as IHeroProfileDto
         this.deadline = this.getGoalDeadline(this.heroDTO) != null ? this.getGoalDeadline(this.heroDTO) : null
         this.logger.info(ProfileComponent.name + ' Hero updated!' + this.heroDTO.username)
-        const bodyMessage = 'Success!'; // Replace with the generated text
+        const bodyMessage = 'Success!';
         const title = 'Successfully updated'
         this.toastService.showToast(title, bodyMessage, EventTypes.Success)
       },
