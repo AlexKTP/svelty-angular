@@ -1,12 +1,15 @@
 import { TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TrackService } from './track.service';
 
 describe('TrackService', () => {
   let service: TrackService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [TrackService]
+    });
     service = TestBed.inject(TrackService);
   });
 
