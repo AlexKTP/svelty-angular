@@ -2,35 +2,38 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TrackService } from './track.service';
 import { ITrack } from 'src/app/models/track.interface';
+import { HttpClientModule } from '@angular/common/http';
 
-describe('TrackService', () => {
+const dummyTracks: ITrack[] = [
+  {
+    weight: 100,
+    chest: 100,
+    abs: 100,
+    hip: 100,
+    bottom: 100,
+    leg: 100,
+    date: new Date(),
+    toSynchronize: false,
+    userId: 1
+  },
+  {
+    weight: 90,
+    chest: 90,
+    abs: 90,
+    hip: 90,
+    bottom: 90,
+    leg: 90,
+    date: new Date(),
+    toSynchronize: false,
+    userId: 1
+  }
+];
+
+describe('TrackService (Unit tests)', () => {
   let service: TrackService;
   let httpMock: HttpTestingController;
 
-  const dummyTracks: ITrack[] = [
-    {
-      weight: 100,
-      chest: 100,
-      abs: 100,
-      hip: 100,
-      bottom: 100,
-      leg: 100,
-      date: new Date(),
-      toSynchronize: false,
-      userId: 1
-    },
-    {
-      weight: 90,
-      chest: 90,
-      abs: 90,
-      hip: 90,
-      bottom: 90,
-      leg: 90,
-      date: new Date(),
-      toSynchronize: false,
-      userId: 1
-    }
-  ];
+
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -78,8 +81,8 @@ describe('TrackService', () => {
         fail('should have failed with the 401 error');
       },
       error: (error: any) => {
-        expect(error.status).toEqual(401, 'status');
-        expect(error.error).toContain('No Authorization header provided', 'message');
+        expect(error.status).withContext('status').toEqual(401);
+        expect(error.error).withContext('error').toEqual('Token is not valid or has expired');
       }
     });
 
@@ -89,7 +92,43 @@ describe('TrackService', () => {
     console.log('authorization: ' + req.request.headers.get('Authorization'));
     expect(req.request.headers.has('Authorization')).toBeTrue();
 
-    req.flush('No Authorization header provided', { status: 401, statusText: 'Unauthorized' });
+    req.flush('Token is not valid or has expired', { status: 401, statusText: 'Unauthorized' });
   });
 
 });
+
+describe('TrackService (Integration Tests)', () => {
+  let service: TrackService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientModule],  // Use the real HttpClient
+      providers: [TrackService]
+    });
+
+    service = TestBed.inject(TrackService);
+  });
+
+  it('should throw an error if no valid token is provided', (done) => {
+    service.getTracks().subscribe({
+      next: () => {
+        fail('should have failed with the 401 error');
+      },
+      error: (error: any) => {
+        expect(error.status).withContext('status').toEqual(401);
+        expect(error.error).withContext('error').toEqual('Token is not valid or has expired');
+        done();
+      }
+    });
+  });
+
+
+
+
+
+});
+
+
+
+
+
