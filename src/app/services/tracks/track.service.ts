@@ -1,5 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, throwError } from 'rxjs';
 import { ITrack } from 'src/app/models/track.interface';
 
 @Injectable({
@@ -25,11 +26,20 @@ export class TrackService {
       abs: track.abs, hip: track.hip, bottom: track.bottom, leg: track.leg,
       createdAt: timeStamp, toSynchronize: track.toSynchronize ? 1 : 0, userId: track.userId
     });
-    return this.http.post(url, body, { headers: this.headers });
+    return this.http.post(url, body, { headers: this.headers }).pipe(
+      catchError(this.handleError)
+    );
   }
 
   getTracks() {
-    return this.http.get(`${this.apiUrl}/tracks`, { headers: this.headers, params: { userId: localStorage.getItem('svelty-hero-id') as string } });
+    return this.http.get(`${this.apiUrl}/tracks`,
+      { headers: this.headers, params: { userId: localStorage.getItem('svelty-hero-id') as string } }).pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    return throwError(() => error);
   }
 
 }
