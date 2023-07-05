@@ -1,7 +1,10 @@
 <div class="container col-xl-10 col-xxl-8">
     <div class="row align-items-center g-lg-5 py-5 vh-80">
       <div class="col-lg-7 text-center text-lg-start">
-        <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">A new step!</h1>
+        <h1 class="display-4 fw-bold lh-1 text-primary mb-3">A new step!</h1>
+        <div class="spinner-border text-primary" *ngIf="isLoading" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
           <div>
             <blockquote class="blockquote">
               <p class="mb-0">{{quote?.content}}</p>
