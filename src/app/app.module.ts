@@ -19,6 +19,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { ToasterComponent } from './components/toaster/toaster.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ImportComponent } from './components/import/import.component';
+import { DragndropComponent } from './components/dragndrop/dragndrop.component';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { ProfileComponent } from './components/profile/profile.component';
     NotFoundComponent,
     ToastComponent,
     ToasterComponent,
-    ProfileComponent],
+    ProfileComponent,
+    ImportComponent,
+    DragndropComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

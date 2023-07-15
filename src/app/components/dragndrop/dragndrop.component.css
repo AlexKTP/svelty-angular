@@ -1,0 +1,12 @@
+
+.svg-class {
+    width: 50%;
+    height: auto;
+    fill: grey;
+    opacity: 0.5;
+}
+
+.parent:hover .svg-class {
+    fill: #0275d8;
+    opacity: 1;
+}
