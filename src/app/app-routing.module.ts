@@ -6,6 +6,7 @@ import { LoginComponent } from './components/login/login.component';
 import { canActivate } from './utils/permission';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ImportComponent } from './components/import/import.component';
 
 const routes: Routes = [
   { path: 'register', component: LoginComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'form', canActivate: [canActivate], component: CreateformComponent },
   { path: 'home', canActivate: [canActivate], component: HomeComponent, data: { animation: 'home <=> form' } },
   { path: 'profile', canActivate: [canActivate], component: ProfileComponent },
+  { path: 'import', canActivate: [canActivate], component: ImportComponent, data: { animation: 'home <=> import' } },
   { path: '**', canActivate: [canActivate], component: NotFoundComponent },
 ];
 

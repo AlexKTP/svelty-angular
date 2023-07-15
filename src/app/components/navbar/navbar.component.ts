@@ -51,5 +51,9 @@ export class NavbarComponent {
     this.router.navigate(['/form'], { state: { animation: 'home <=> form' } });
   }
 
+  navigateToImport() {
+    this.router.navigate(['/import'], { state: { animation: 'home <=> import' } });
+  }
+
 
 }
